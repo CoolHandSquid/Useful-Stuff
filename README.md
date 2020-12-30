@@ -1,2 +1,2 @@
-# ThePhotoStick
-ThePhotoStick Software
+# Useful Scripts
+Useful Scripts
