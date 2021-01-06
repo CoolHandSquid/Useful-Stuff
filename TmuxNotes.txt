@@ -1,0 +1,49 @@
+##########TMUX-ification###########
+Start Tmux = tmux "or" tmux new -s YEET
+Access a Tmux session = tmux a
+Background a Tmux session = hotkey d
+ctrl+b=hotkey
+r=recursive search through history
+
+##########Window and Pane Control###########
+c=new window
+,=name window
+%=Add a Vertical split pane
+"=Add a Horizontal split pane
+-z=zoom and unzoom a pane
+o=switch pane
+q1=switch pane
+x=kill pane
+&=kill window
+:kill-session=kill Tmux session
+arrow=switch pane
+space   =cycle through pane layouts
+hold ctrl and press arrows=adjust panes
+
+##########send/join pane##########
+1. Go to the window you want the other pane to populate to
+2. :join-pane -s 0:1        [session:window]
+Note: Determine session with q
+
+##########Search with VIM##########
+1. Enter copy mode [
+2. Use space bar to start/stop highlighting text (this is cool becasue vim search features / $ gg G :10 n N work)
+3. Hit ENTER, sending highlighted text to specail tmux clipboard
+4. ] to paste.
+
+##########Not Tmux but important cursor stuff##########
+CTRL e = end of line
+CTRL a = begining of line
+CTRL arrow = jump by word
+
+##########Conf File##########
+#.tmux.conf
+#set -g allow-rename off
+#set -g mouse on
+#set-window-option -g mode-keys vi
+#############################
+
+##########Copy Paste##########
+Copy=Hold shift + Left Click
+Paste=Shift + Middle Click
+##############################
