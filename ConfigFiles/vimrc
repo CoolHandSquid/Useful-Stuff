@@ -1,0 +1,33 @@
+set number
+set ruler
+color slate
+set guifont=Lucida_Console:h10:b:cANSI
+" Show incomplete commands in bottom right corner
+set showcmd
+" Shows menu when using tab completion
+set wildmenu
+" ^^^^^^^^^^^^These are the important settings for my heart
+
+" keeps cursor from top of the screen
+set scrolloff=5
+
+" highlights all matches in a search
+set hlsearch
+
+" highlights matches as you type
+set incsearch
+
+" auto indenting
+set ai
+
+" smart indenting
+set si
+
+" tell vim your background is dark
+set bg=dark
+
+" stuff to make python pretty
+syntax on
+filetype indent plugin on
+set ts=8 et sw=4 sts=4
+
