@@ -4,3 +4,4 @@ for x in {1..65535};
         echo "Open port: $x"
     fi
 done
+#This will take for muthafukin ever
