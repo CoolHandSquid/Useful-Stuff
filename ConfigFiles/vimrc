@@ -43,14 +43,19 @@ map <F10> zM
 map <F5> i<C-R>=strftime("%Y-%m-%d-%H:%M:%S")<CR>
 
 " Fold argument
-setlocal foldmethod=marker foldmarker=<!---Yeet,<!---yeet-->
+" setlocal foldmethod=marker foldmarker=<!---Yeet,<!---yeet-->
+setlocal foldmethod=marker foldmarker=<details>,</details>
+
+" HighLighter
+syn match ipaddr /\(\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[01]\?\_[0-9]\_[0-9]\?\)\.\)\{3\}\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[01]\?\_[0-9]\_[0-9]\?\)/
+hi link ipaddr Identifier
 
 function! AddHeader(OpName)
-	exe "normal! i<!---Yeet Header-->\<CR>\<CR># Operation " . a:OpName . "\<CR>## Mission Admin\<CR><details>\<CR><summary>Order Of Operations</summary>\<CR>\<CR>```\<CR>\<CR>\<CR>```\<CR>\<CR></details>\<CR>\<CR><details>\<CR><summary>Mission Plan</summary>\<CR>\<CR>```\<CR>\<CR>```\<CR>\<CR></details>\<CR>\<CR>## Targets\<CR><!---yeet-->\<CR>\<ESC>"
+	exe "normal! i# Operation " . a:OpName . "\<CR>## Mission Admin\<CR><details><!---Order Of Operations-->\<CR><summary>Order Of Operations</summary>\<CR>\<CR>```\<CR>\<CR>\<CR>```\<CR>\<CR></details>\<CR><details><!---Mission Plan-->\<CR><summary>Mission Plan</summary>\<CR>\<CR>```\<CR>\<CR>```\<CR>\<CR></details>\<CR>\<CR>## Targets\<CR>\<ESC>"
 endfunction
 
 function! AddTarget(TargNum,TargIP)
-	exe "normal! i<!---Yeet Target " . a:TargNum . " " . a:TargIP . "-->\<CR><details>\<CR><summary>T" . a:TargNum . " " . a:TargIP . "</summary>\<CR>\<CR>```bash\<CR>\<CR>\<CR>```\<CR>\<CR></details>\<CR><!---yeet-->\<CR>\<ESC>"
+	exe "normal! i<details><!---T" . a:TargNum . " " . a:TargIP . "-->\<CR><summary>T" . a:TargNum . " " . a:TargIP . "</summary>\<CR>\<CR>```bash\<CR>\<CR>\<CR>```\<CR>\<CR></details>\<CR>\<ESC>"
 endfunction
 
 function! InitMission(OpName, IPList)
@@ -58,6 +63,11 @@ function! InitMission(OpName, IPList)
 	let TIndex = 1
 	for Targ in a:IPList
 		call AddTarget(TIndex,Targ)		
+		let TIndex += 1
 	endfor
-	exe "normal! zM"	
+	exe "normal! zMgg"	
 endfunction
+
+
+
+" vim -c 'call InitMission("Enduring Freedom",["172.16.0.5","1.1.1.1","172.16.0.3","5.5.36.3"])' /opt/vimrc/cannon.md
