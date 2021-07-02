@@ -41,14 +41,11 @@ vnoremap <F9> zf
 map <F10> zM
 "Timestamp
 map <F5> i<C-R>=strftime("%Y-%m-%d-%H:%M:%S")<CR>
+imap <F5> <C-R>=strftime("%Y-%m-%d-%H:%M:%S")<CR>
 
 " Fold argument
 " setlocal foldmethod=marker foldmarker=<!---Yeet,<!---yeet-->
 setlocal foldmethod=marker foldmarker=<details>,</details>
-
-" HighLighter
-syn match ipaddr /\(\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[01]\?\_[0-9]\_[0-9]\?\)\.\)\{3\}\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[01]\?\_[0-9]\_[0-9]\?\)/
-hi link ipaddr Identifier
 
 function! AddHeader(OpName)
 	exe "normal! i# Operation " . a:OpName . "\<CR>## Mission Admin\<CR><details><!---Order Of Operations-->\<CR><summary>Order Of Operations</summary>\<CR>\<CR>```\<CR>\<CR>\<CR>```\<CR>\<CR></details>\<CR><details><!---Mission Plan-->\<CR><summary>Mission Plan</summary>\<CR>\<CR>```\<CR>\<CR>```\<CR>\<CR></details>\<CR>\<CR>## Targets\<CR>\<ESC>"
