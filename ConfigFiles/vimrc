@@ -31,3 +31,33 @@ syntax on
 filetype indent plugin on
 set ts=8 et sw=4 sts=4
 
+" Remappings
+" Open and Close Folds
+inoremap <F9> <C-O>za
+nnoremap <F9> za
+onoremap <F9> <C-C>za
+vnoremap <F9> zf
+" Close ALL Folds
+map <F10> zM
+"Timestamp
+map <F5> i<C-R>=strftime("%Y-%m-%d-%H:%M:%S")<CR>
+
+" Fold argument
+setlocal foldmethod=marker foldmarker=<!---Yeet,<!---yeet-->
+
+function! AddHeader(OpName)
+	exe "normal! i<!---Yeet Header-->\<CR>\<CR># Operation " . a:OpName . "\<CR>## Mission Admin\<CR><details>\<CR><summary>Order Of Operations</summary>\<CR>\<CR>```\<CR>\<CR>\<CR>```\<CR>\<CR></details>\<CR>\<CR><details>\<CR><summary>Mission Plan</summary>\<CR>\<CR>```\<CR>\<CR>```\<CR>\<CR></details>\<CR>\<CR>## Targets\<CR><!---yeet-->\<CR>\<ESC>"
+endfunction
+
+function! AddTarget(TargNum,TargIP)
+	exe "normal! i<!---Yeet Target " . a:TargNum . " " . a:TargIP . "-->\<CR><details>\<CR><summary>T" . a:TargNum . " " . a:TargIP . "</summary>\<CR>\<CR>```bash\<CR>\<CR>\<CR>```\<CR>\<CR></details>\<CR><!---yeet-->\<CR>\<ESC>"
+endfunction
+
+function! InitMission(OpName, IPList)
+	call AddHeader(a:OpName)
+	let TIndex = 1
+	for Targ in a:IPList
+		call AddTarget(TIndex,Targ)		
+	endfor
+	exe "normal! zM"	
+endfunction
