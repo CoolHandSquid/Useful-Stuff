@@ -47,16 +47,16 @@ imap <F5> <C-R>=strftime("%Y-%m-%d-%H:%M:%S")<CR>
 " setlocal foldmethod=marker foldmarker=<!---Yeet,<!---yeet-->
 setlocal foldmethod=marker foldmarker=<details>,</details>
 
-function! AddHeader(OpName)
-	exe "normal! i# Operation " . a:OpName . "\<CR>## Mission Admin\<CR><details><!---Order Of Operations-->\<CR><summary>Order Of Operations</summary>\<CR>\<CR>```\<CR>\<CR>\<CR>```\<CR>\<CR></details>\<CR><details><!---Mission Plan-->\<CR><summary>Mission Plan</summary>\<CR>\<CR>```\<CR>\<CR>```\<CR>\<CR></details>\<CR>\<CR>## Targets\<CR>\<ESC>"
+function! AddHeader(OperatorName, OpName)
+	exe "normal! i# Operation " . a:OpName . "\<CR>## Mission Admin\<CR><details><!---Name and Date-->\<CR><summary>Name and Date</summary>\<CR>\<CR>| Operator Name | Date |\<CR>| --- | --- |\<CR>|" . a:OperatorName . " |  " . strftime("%Y-%m-%d-%H:%M:%S") . " |\<CR></details>\<CR><details><!---Order Of Operations-->\<CR><summary>Order Of Operations</summary>\<CR>\<CR>```\<CR>\<CR>\<CR>```\<CR></details>\<CR><details><!---Mission Plan-->\<CR><summary>Mission Plan</summary>\<CR>\<CR>```\<CR>\<CR>```\<CR></details>\<CR>\<CR>## Targets\<CR>\<ESC>"
 endfunction
 
 function! AddTarget(TargNum,TargIP)
-	exe "normal! i<details><!---T" . a:TargNum . " " . a:TargIP . "-->\<CR><summary>T" . a:TargNum . " " . a:TargIP . "</summary>\<CR>\<CR>```bash\<CR>\<CR>\<CR>```\<CR>\<CR></details>\<CR>\<ESC>"
+	exe "normal! i<details><!---T" . a:TargNum . " " . a:TargIP . "-->\<CR><summary>T" . a:TargNum . " " . a:TargIP . "</summary>\<CR>\<CR>| On Target | Vet Complete | Off Target |\<CR>| --- | --- | --- |\<CR>| | | |\<CR>\<CR>```bash\<CR>\<CR>\<CR>```\<CR></details>\<CR>\<ESC>"
 endfunction
 
-function! InitMission(OpName, IPList)
-	call AddHeader(a:OpName)
+function! InitMission(OperatorName, OpName, IPList)
+	call AddHeader(a:OperatorName, a:OpName)
 	let TIndex = 1
 	for Targ in a:IPList
 		call AddTarget(TIndex,Targ)		
@@ -67,4 +67,4 @@ endfunction
 
 
 
-" vim -c 'call InitMission("Enduring Freedom",["172.16.0.5","1.1.1.1","172.16.0.3","5.5.36.3"])' /opt/vimrc/cannon.md
+" vim -c 'call InitMission("Squid","Enduring Freedom",["172.16.0.5","1.1.1.1","172.16.0.3","5.5.36.3"])' /opt/vimrc/cannon.md
