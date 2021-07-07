@@ -48,13 +48,15 @@ imap <F5> <C-R>=strftime("%Y-%m-%d-%H:%M:%S")<CR>
 setlocal foldmethod=marker foldmarker=<details>,</details>
 
 function! AddHeader(OperatorName, OpName)
-	exe "normal! i# Operation " . a:OpName . "\<CR>## Mission Admin\<CR><details><!---Name and Date-->\<CR><summary>Name and Date</summary>\<CR>\<CR>| Operator Name | Date |\<CR>| --- | --- |\<CR>|" . a:OperatorName . " |  " . strftime("%Y-%m-%d-%H:%M:%S") . " |\<CR></details>\<CR><details><!---Order Of Operations-->\<CR><summary>Order Of Operations</summary>\<CR>\<CR>```\<CR>\<CR>\<CR>```\<CR></details>\<CR><details><!---Mission Plan-->\<CR><summary>Mission Plan</summary>\<CR>\<CR>```\<CR>\<CR>```\<CR></details>\<CR>\<CR>## Targets\<CR>\<ESC>"
+	exe "normal! i# Operation " . a:OpName . "\<CR>## Mission Admin\<CR><details><!---Name and Date-->\<CR><summary>Name and Date</summary>\<CR>\<CR>| Operator Name | Date |\<CR>| --- | --- |\<CR>|" . a:OperatorName . " |  " . strftime("%Y-%m-%d-%H:%M:%S") . " |\<CR></details>\<CR><details><!---Scheme of Maneuver-->\<CR><summary>Scheme of Maneuver</summary>\<CR>\<CR>```\<CR>\<CR>\<CR>```\<CR></details>\<CR><details><!---Mission Plan-->\<CR><summary>Mission Plan</summary>\<CR>\<CR>```\<CR>\<CR>```\<CR></details>\<CR>\<CR>## Targets\<CR>\<ESC>"
 endfunction
 
+" call AddTarget("5","2.2.2.2")
 function! AddTarget(TargNum,TargIP)
-	exe "normal! i<details><!---T" . a:TargNum . " " . a:TargIP . "-->\<CR><summary>T" . a:TargNum . " " . a:TargIP . "</summary>\<CR>\<CR>| On Target | Vet Complete | Off Target |\<CR>| --- | --- | --- |\<CR>| | | |\<CR>\<CR>```bash\<CR>\<CR>\<CR>```\<CR></details>\<CR>\<ESC>"
+	exe "normal! i<details><!---T" . a:TargNum . " " . a:TargIP . "-->\<CR><summary>T" . a:TargNum . " " . a:TargIP . "</summary>\<CR>\<CR>| On Target | Vet Complete | Off Target |\<CR>| --- | --- | --- |\<CR>| | | |\<CR>\<CR>---\<CR></details>\<CR>\<ESC>"
 endfunction
 
+" vim -c 'call InitMission("Squid","Enduring Freedom",["172.16.0.5","1.1.1.1","172.16.0.3","5.5.36.3"])' /opt/vimrc/cannon.md
 function! InitMission(OperatorName, OpName, IPList)
 	call AddHeader(a:OperatorName, a:OpName)
 	let TIndex = 1
@@ -66,5 +68,31 @@ function! InitMission(OperatorName, OpName, IPList)
 endfunction
 
 
+" :call AddNotes(["List","of","Notes"])  and the notes folds will be created
+function! AddNotes(NoteName)
+    for NoteName in a:NoteName
+        exe "normal! i<details><!---" . NoteName . "-->\<CR><summary>" . NoteName . "</summary>\<CR>\<CR>```bash\<CR>\<CR>```\<CR></details>\<CR>\<ESC>" 
+    endfor
+    exe "normal! zMza"
+endfunction
 
-" vim -c 'call InitMission("Squid","Enduring Freedom",["172.16.0.5","1.1.1.1","172.16.0.3","5.5.36.3"])' /opt/vimrc/cannon.md
+" :call AddPics(["List","of","Pics","in","dir"]) and the pics will be referenced
+function! AddPics(PicName)
+    for PicName in a:PicName
+        exe "normal! i\<CR>![CHS](" . PicName . ")   \<CR>"
+    endfor
+endfunction
+
+" :call AddFolds(["Names","Of","Folds"]) and the named folds will be created
+function! AddFolds(FoldName)
+    for FoldName in a:FoldName
+        exe "normal! i<details><!---" . FoldName . "-->\<CR><summary>" . FoldName . "</summary>\<CR>\<CR>\<CR></details>\<CR>"
+    endfor
+    exe "normal! \<Up>zMza"
+endfunction
+
+" Type FOLD and then space in insert mode, and a Fold will be created.
+ab FOLD <details><!---FOLD--><CR><summary>FOLD</summary><CR><CR><CR></details>
+
+" If markdown viewer plugin does not work on firefox
+" https://superuser.com/questions/696361/how-to-get-the-markdown-viewer-addon-of-firefox-to-work-on-linux
