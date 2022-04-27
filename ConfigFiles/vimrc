@@ -97,7 +97,8 @@ ab FOLD <details><!---FOLD--><CR><summary>FOLD</summary><CR><CR><CR></details>
 " If markdown viewer plugin does not work on firefox
 " https://superuser.com/questions/696361/how-to-get-the-markdown-viewer-addon-of-firefox-to-work-on-linux
 
-if echo expand('%:e') == smd...
+" if echo expand('%:e') == smd...
+if &ft == 'smd'
 	syntax region smdCodeBlock start=/```O/ end=/```C/
 	syntax match smdCommand1 /^[ \t]*[$].*/ oneline
 	syntax region smdCommand2 start=/^[ \t]*[$]/ end=/#/ oneline
@@ -111,3 +112,4 @@ if echo expand('%:e') == smd...
 	hi def link smdDefinition       Question
 	hi def link smdFold1            Title
 	hi def link smdFold2            Title
+endif
