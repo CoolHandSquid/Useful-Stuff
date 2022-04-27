@@ -96,3 +96,18 @@ ab FOLD <details><!---FOLD--><CR><summary>FOLD</summary><CR><CR><CR></details>
 
 " If markdown viewer plugin does not work on firefox
 " https://superuser.com/questions/696361/how-to-get-the-markdown-viewer-addon-of-firefox-to-work-on-linux
+
+if echo expand('%:e') == smd...
+	syntax region smdCodeBlock start=/```O/ end=/```C/
+	syntax match smdCommand1 /^[ \t]*[$].*/ oneline
+	syntax region smdCommand2 start=/^[ \t]*[$]/ end=/#/ oneline
+	syntax region smdDefinition start=/^[ \t]*[>]/ end=/[:]/ oneline
+	syntax match smdFold1 /{{{ [#]\{1,3\}/
+	syntax match smdFold2 /}}} [#]\{1,3\}/
+
+	hi def link smdCommand1         LineNr
+	hi def link smdCommand2         LineNr
+	hi def link smdCodeBlock        Operator   
+	hi def link smdDefinition       Question
+	hi def link smdFold1            Title
+	hi def link smdFold2            Title
