@@ -45,7 +45,7 @@ imap <F5> <C-R>=strftime("%Y-%m-%d-%H:%M:%S")<CR>
 
 " Fold argument
 " setlocal foldmethod=marker foldmarker=<!---Yeet,<!---yeet-->
-setlocal foldmethod=marker foldmarker=<details>,</details>
+setlocal foldmethod=marker foldmarker={{{,}}}
 
 function! AddHeader(OperatorName, OpName)
 	exe "normal! i# Operation " . a:OpName . "\<CR>## Mission Admin\<CR><details><!---Name and Date-->\<CR><summary>Name and Date</summary>\<CR>\<CR>| Operator Name | Date |\<CR>| --- | --- |\<CR>|" . a:OperatorName . " |  " . strftime("%Y-%m-%d-%H:%M:%S") . " |\<CR></details>\<CR><details><!---Scheme of Maneuver-->\<CR><summary>Scheme of Maneuver</summary>\<CR>\<CR>```\<CR>\<CR>\<CR>```\<CR></details>\<CR><details><!---Mission Plan-->\<CR><summary>Mission Plan</summary>\<CR>\<CR>```\<CR>\<CR>```\<CR></details>\<CR>\<CR>## Targets\<CR>\<ESC>"
@@ -98,17 +98,18 @@ ab FOLD <details><!---FOLD--><CR><summary>FOLD</summary><CR><CR><CR></details>
 " https://superuser.com/questions/696361/how-to-get-the-markdown-viewer-addon-of-firefox-to-work-on-linux
 
 if expand('%:e') == 'smd'
-	syntax region smdCodeBlock start=/```O/ end=/```C/
-	syntax match smdCommand1 /^[ \t]*[$].*/ oneline
-	syntax region smdCommand2 start=/^[ \t]*[$]/ end=/#/ oneline
-	syntax region smdDefinition start=/^[ \t]*[>]/ end=/[:]/ oneline
-	syntax match smdFold1 /{{{ [#]\{1,3\}/
-	syntax match smdFold2 /}}} [#]\{1,3\}/
+    filetype off 
+    syntax match smdCommand1 /^[ \t]*[$].*/ 
+    syntax region smdCommand2 start=/^[ \t]*[$]/ end=/#/ oneline
+    syntax region smdCodeBlock start=/```O/ end=/```C/
+    syntax region smdDefinition start=/^[ \t]*[>]/ end=/[:]/ oneline
+    syntax match smdFold1 /{{{ [#]\{1,3\}/
+    syntax match smdFold2 /}}} [#]\{1,3\}/
 
-	hi def link smdCommand1         LineNr
-	hi def link smdCommand2         LineNr
-	hi def link smdCodeBlock        Operator   
-	hi def link smdDefinition       Question
-	hi def link smdFold1            Title
-	hi def link smdFold2            Title
+    hi def link smdCommand1     LineNr
+    hi def link smdCommand2     LineNr
+    hi def link smdCodeBlock    Operator   
+    hi def link smdDefinition   Question
+    hi def link smdFold1        Title
+    hi def link smdFold2        Title
 endif
